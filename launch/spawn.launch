@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <!--gazebo basic parameters-->
+  <!--overwriting these args -->
+  <arg name="debug" default="false" />
+  <arg name="gui" default="true" />
+  <arg name="pause" default="true" />
+  <arg name="world" default="$(find gazebo_sim)/world/empty_world.world" />
+
+  <!--include gazebo_ros launcher-->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg pause)" />
+    <arg name="use_sim_time" value="true" />
+  </include>
+
+  
+  <!--urdf/xacro parameters-->
+  <param name="robot_description" command="cat '$(find urdf_teste)/urdf/robo_dif.xacro'" />
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.2"/>
+ 
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model robo_dif -x $(arg x) -y $(arg y) -z $(arg z)" />
+</launch>
