@@ -3,13 +3,22 @@
 <!-- robot description-->
 <robot name="robo_ dif" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!--chassis-->
+  <!--base link-->
   <link name="base_link">
+    <!--chassis-->
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <box size="0.5 0.3 0.07"/>
       </geometry>
+    </visual>
+
+    <!--caster front-->
+    <visual>
+      <origin rpy=" 0 0 0" xyz="0.2 0 -0.05"/>
+        <geometry>
+          <sphere radius="0.05"/>
+        </geometry>
     </visual>
   </link>
 
