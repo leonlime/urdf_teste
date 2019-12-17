@@ -5,7 +5,7 @@
 
   <!--base link-->
   <link name="base_link">
-    <!--chassis-->
+    <!--chassis visual-->
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
@@ -13,33 +13,74 @@
       </geometry>
     </visual>
 
-    <!--caster front-->
+    <!--chassis collision-->
+    <collision>
+      <geometry>
+        <box size="0.5 0.3 0.07"/>
+      </geometry> 
+    </collision>
+
+    <!--caster front visual-->
     <visual>
       <origin rpy=" 0 0 0" xyz="0.2 0 -0.05"/>
         <geometry>
           <sphere radius="0.05"/>
         </geometry>
     </visual>
+
+    <!--caster front collision-->
+    <collision>
+      <origin rpy=" 0 0 0" xyz="0.35 0 -0.05"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
   </link>
 
   <!--left wheel-->
   <link name="lwheel">
+    <!--left wheel visual-->
     <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
         <cylinder length="0.04" radius="0.1"/>
       </geometry>
     </visual>
+
+    <!--left wheel collision-->
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>    
+    </collision>
   </link>
 
   <!--right wheel-->
   <link name="rwheel">
+    <!--right wheel visual-->
     <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
         <cylinder length="0.04" radius="0.1"/>
       </geometry>
     </visual>
+
+    <!--right wheel collision-->
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>    
+    </collision>
   </link>
 
   <!--joint for left wheel-->
