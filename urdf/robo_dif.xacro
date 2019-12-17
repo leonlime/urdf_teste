@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 
-<!-- robot description-->
+<!--robot description-->
 <robot name="robo_ dif" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ############################# INCLUDES ##########################  -->  
+
+  <xacro:include filename="$(find urdf_teste)/urdf/macro.xacro" />
+
+  <!-- ############################# LINKS #############################  -->
 
   <!--base link-->
   <link name="base_link">
@@ -109,6 +115,34 @@
     </inertial>
   </link>
 
+  <!--sensor laser-->
+  <link name="sensor_laser">
+    <!--sensor laser visual-->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </visual>
+
+    <!--sensor laser collision-->
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </collision>
+
+    <!--sensor laser inertial-->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="1" />
+      <xacro:cylinder_inertia mass="1" r="0.05" l="0.1" />
+    </inertial>
+  </link>
+
+  <!-- ############################# JOINTS #############################  -->
+
   <!--joint for left wheel-->
   <joint name="joint_left_wheel" type="continuous">
     <origin rpy="0 0 0" xyz="-0.05 -0.15 0"/>
@@ -129,4 +163,62 @@
     <joint_properties damping="1.0" friction="1.0" />
   </joint>  
 
+  <!--joint for sensor laser-->
+  <joint name="joint_sensor_laser" type="fixed">
+    <origin xyz="0.15 0 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="sensor_laser"/>
+  </joint>
+
+  <!-- ############################# PLUGINS #############################  -->  
+
+  <!--gazebo diferential drive plugin-->
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>20</updateRate>
+      <leftJoint>joint_left_wheel</leftJoint>
+      <rightJoint>joint_right_wheel</rightJoint>
+      <wheelSeparation>0.4</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <torque>0.1</torque>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>link_chassis</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+  <!--gazebo sensor laser plugin-->
+  <gazebo reference="sensor_laser">
+    <sensor type="ray" name="head_hokuyo_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>20</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+        <topicName>/robo_dif/laser/scan</topicName>
+        <frameName>sensor_laser</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
 </robot>
