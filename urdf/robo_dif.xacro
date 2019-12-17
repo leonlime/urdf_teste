@@ -20,6 +20,13 @@
       </geometry> 
     </collision>
 
+    <!--chassis inertial-->
+    <inertial>
+      <mass value="5"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <inertia ixx="0.0395416666667" ixy="0" ixz="0" iyy="0.106208333333" iyz="0" izz="0.106208333333"/>
+    </inertial>
+
     <!--caster front visual-->
     <visual>
       <origin rpy=" 0 0 0" xyz="0.2 0 -0.05"/>
@@ -63,6 +70,13 @@
         <cylinder length="0.04" radius="0.1"/>
       </geometry>    
     </collision>
+
+    <!--left wheel inertial-->
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
 
   <!--right wheel-->
@@ -81,6 +95,13 @@
         <cylinder length="0.04" radius="0.1"/>
       </geometry>    
     </collision>
+
+    <!--right wheel inertial-->
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>
+    </inertial>
   </link>
 
   <!--joint for left wheel-->
