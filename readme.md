@@ -2,13 +2,11 @@ Packages:
 ---
 To use this package you need to install two previous packs:
 
-- https://github.com/leolima21/gazebo_sim **For use gazebo world**
+- https://github.com/leolima21/gazebo_sim **For gazebo world**
 
 - https://github.com/leolima21/360joy_teleop **For joystick teleop**
 
-
-To create a face model in gazebo world you can use this repository and use a face image instead a aruco pic: 
----
+You can use a face image instead of an aruco picture in order to create a face model in some gazebo world:
 - https://github.com/mikaelarguedas/gazebo_models
 
 
